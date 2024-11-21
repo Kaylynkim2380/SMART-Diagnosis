@@ -2,7 +2,9 @@ import streamlit as st
 import numpy as np
 import tensorflow as tf
 import librosa
-import requests
+
+# Set page title
+st.set_page_config(page_title="COPD Diagnosis", page_icon="🫁")
 
 st.title("COPD Detection System")
 st.write("Upload a breathing sound recording to check for COPD indicators.")
@@ -70,3 +72,14 @@ if audio_file is not None:
                 
         except Exception as e:
             st.error(f"Error during analysis: {str(e)}")
+            st.write("Technical details:", str(e))
+
+st.sidebar.markdown("""
+### About
+This is a COPD detection system that analyzes breathing sounds.
+
+### Instructions
+1. Upload a WAV file of breathing sounds
+2. Click 'Analyze Audio'
+3. View the results and download if needed
+""")
