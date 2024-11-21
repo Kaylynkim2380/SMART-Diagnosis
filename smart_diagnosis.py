@@ -1,54 +1,12 @@
-import streamlit as st
-import tensorflow as tf
-import numpy as np
-import librosa
-import os
+streamlit==1.40.1
+tensorflow==2.15.0
+numpy==1.26.4
+librosa==0.10.1
+tensorflow-io==0.34.0
+soundfile==0.12.1
+scikit-learn==1.4.1.post1
 
-# Load the model
-@st.cache_resource
-def load_model():
-    return tf.keras.models.load_model('smart_diagnosis_model.keras')
-
-try:
-    model = load_model()
-except:
-    st.error("Error loading model. Please check if the model file exists.")
-
-def smart_diagnosis(audio_file):
-    try:
-        audio, sr = librosa.load(audio_file, sr=16000)
-        prediction = model.predict(audio)
-        confidence = float(prediction[0][0])
-        
-        return {
-            "diagnosis": "COPD" if confidence > 0.5 else "NOT COPD",
-            "confidence": confidence * 100
-        }
-    except Exception as e:
-        return {"error": str(e)}
-
-st.title("COPD Detection System")
-st.write("Upload a breathing sound recording to check for COPD indicators.")
-
-audio_file = st.file_uploader("Upload Audio File", type=['wav'])
-
-if audio_file is not None:
-    st.audio(audio_file)
-    
-    if st.button("Analyze Audio"):
-        with st.spinner("Analyzing..."):
-            temp_path = "temp_audio.wav"
-            with open(temp_path, "wb") as f:
-                f.write(audio_file.getbuffer())
-            
-            result = smart_diagnosis(temp_path)
-            
-            os.remove(temp_path)
-            
-            if "error" in result:
-                st.error(f"Error: {result['error']}")
-            else:
-                st.subheader("Results:")
-                st.write(f"Diagnosis: {result['diagnosis']}")
-                st.write(f"Confidence: {result['confidence']:.2f}%")
-                st.progress(result['confidence'] / 100)
+📁 Your Repository
+├── app.py
+├── requirements.txt
+└── smart_diagnosis_model.keras
