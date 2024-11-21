@@ -1,7 +1,3 @@
-streamlit
-tensorflow-cpu
-numpy
-librosa
-soundfile
-scikit-learn
-protobuf
+streamlit==1.40.1
+tensorflow-cpu==2.15.0
+numpy==1.26.4
