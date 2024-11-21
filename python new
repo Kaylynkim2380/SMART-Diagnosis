@@ -1,0 +1,6 @@
+# Create a new virtual environment with Python 3.10
+python3.10 -m venv venv
+source venv/bin/activate
+
+# Install required packages
+pip install streamlit numpy tensorflow librosa
