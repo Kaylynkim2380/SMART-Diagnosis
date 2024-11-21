@@ -1,6 +1,30 @@
 import streamlit as st
 import numpy as np
 import os
+from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+import tensorflow as tf
+import librosa
+
+# Create FastAPI app
+app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+@app.post("/predict")
+async def predict(audio_file: UploadFile = File(...)):
+    # Your existing prediction code here
+    # Make sure to return JSON response
+    return {"prediction": result}
+
+# Your existing Streamlit code here
 
 st.title("COPD Detection System")
 st.write("Upload a breathing sound recording to check for COPD indicators.")
